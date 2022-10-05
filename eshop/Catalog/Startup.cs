@@ -20,6 +20,7 @@ namespace Catalog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<ICatalogItemRepository, CatalogItemRepository>();
             services.AddDbContext<CatalogContext>(opt =>
                 opt.UseInMemoryDatabase("InMem"));
             services.AddSwaggerGen(c =>
