@@ -6,3 +6,17 @@ services:
     build:
       context: .
       dockerfile: Client/Dockerfile
+
+  catalog:
+    image: ${DOCKER_REGISTRY-}catalog
+    build:
+      context: .
+      dockerfile: Catalog/Dockerfile
+
+
+  identity:
+    image: ${DOCKER_REGISTRY-}identity
+    build:
+      context: .
+      dockerfile: Identity/Dockerfile
+
