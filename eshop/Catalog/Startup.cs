@@ -21,8 +21,10 @@ namespace Catalog
         {
             services.AddControllers();
             services.AddScoped<ICatalogItemRepository, CatalogItemRepository>();
+            //services.AddDbContext<CatalogContext>(opt =>
+            //    opt.UseInMemoryDatabase("InMem"));
             services.AddDbContext<CatalogContext>(opt =>
-                opt.UseInMemoryDatabase("InMem"));
+                opt.UseSqlServer("Server=sqldata;Initial Catalog=CatalogDb;User Id=sa;Password=Pass@word"));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog", Version = "v1" });

@@ -17,6 +17,10 @@ namespace Catalog.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());
+            builder.ApplyConfiguration(new CatalogTypeEntityTypeConfiguration());
+            builder.ApplyConfiguration(new CatalogItemEntityTypeConfiguration());
+
             //CatalogBrand
             builder.Entity<CatalogBrand>().HasData(new CatalogBrand
             {

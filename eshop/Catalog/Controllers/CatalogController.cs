@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Catalog.Controllers
 {
@@ -19,10 +22,13 @@ namespace Catalog.Controllers
 
         [HttpGet]
         [Route("items")]
-        public ActionResult<IEnumerable<CatalogItem>> GetCatalogItems()
+        //[ProducesResponseType(typeof(IEnumerable<CatalogItem>), (int)HttpStatusCode.OK)]
+        //[ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult> GetCatalogItems()
         {
             Console.WriteLine("--> GetCatalogItems()");
-            var catalogItems = _repository.GetCatalogItems();
+            var catalogItems = await _repository.GetCatalogItems();
+
             return Ok(catalogItems);
         }
 
