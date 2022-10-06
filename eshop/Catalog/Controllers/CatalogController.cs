@@ -13,22 +13,20 @@ namespace Catalog.Controllers
     [ApiController]
     public class CatalogController : ControllerBase
     {
-        private readonly ICatalogItemRepository _repository;
+        private readonly ICatalogItemRepository _itemRepo;
+        private readonly ICatalogBrandRepository _brandRepo;
 
-        public CatalogController(ICatalogItemRepository repository)
+        public CatalogController(ICatalogItemRepository itemRepo, ICatalogBrandRepository brandRepo)
         {
-            Console.WriteLine("--> CatalogController()");
-            _repository = repository;
+            _itemRepo = itemRepo;
+            _brandRepo = brandRepo;
         }
 
         [HttpGet]
         [Route("items")]
-        //[ProducesResponseType(typeof(IEnumerable<CatalogItem>), (int)HttpStatusCode.OK)]
-        //[ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult> ItemsAsync()
         {
-            Console.WriteLine("--> GetCatalogItems()");
-            var catalogItems = await _repository.GetCatalogItems();
+            var catalogItems = await _itemRepo.GetCatalogItems();
 
             return Ok(catalogItems);
         }
@@ -37,8 +35,7 @@ namespace Catalog.Controllers
         [Route("items/{id:int}")]
         public async Task<ActionResult> ItemByIdAsync(int id)
         {
-            Console.WriteLine("--> GetCatalogItemById()");
-            var catalogItem = await _repository.GetCatalogItemById(id);
+            var catalogItem = await _itemRepo.GetCatalogItemById(id);
             if (catalogItem != null)
             {
                 return Ok(catalogItem);
@@ -48,11 +45,38 @@ namespace Catalog.Controllers
 
         [HttpPost]
         [Route("items")]
-        public async Task<ActionResult> CreateProductAsync(CatalogItem catalogItem)
+        public async Task<ActionResult> CreateItemAsync(CatalogItem catalogItem)
         {
-            Console.WriteLine("--> CreateCatalogItem()");
-            await _repository.CreateUpdateCatalogItem(catalogItem);
+            await _itemRepo.CreateUpdateCatalogItem(catalogItem);
             return CreatedAtAction(nameof(ItemByIdAsync), new { Id = catalogItem.Id }, catalogItem);
+        }
+
+        [HttpGet]
+        [Route("brands")]
+        public async Task<ActionResult> BrandsAsync()
+        {
+            var catalogBrands = await _brandRepo.GetCatalogBrands();
+            return Ok(catalogBrands);
+        }
+
+        [HttpGet]
+        [Route("brands/{id:int}")]
+        public async Task<ActionResult> BrandByIdAsync(int id)
+        {
+            var catalogBrand = await _brandRepo.GetCatalogBrandById(id);
+            if (catalogBrand != null)
+            {
+                return Ok(catalogBrand);
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        [Route("brands")]
+        public async Task<ActionResult> CreateBrandAsync(CatalogBrand catalogBrand)
+        {
+            await _brandRepo.CreateUpdateCatalogBrand(catalogBrand);
+            return CreatedAtAction(nameof(BrandByIdAsync), new { Id = catalogBrand.Id }, catalogBrand);
         }
     }
 }

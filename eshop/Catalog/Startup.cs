@@ -22,8 +22,7 @@ namespace Catalog
         {
             services.AddControllers();
             services.AddScoped<ICatalogItemRepository, CatalogItemRepository>();
-            //services.AddDbContext<CatalogContext>(opt =>
-            //    opt.UseInMemoryDatabase("InMem"));
+            services.AddScoped<ICatalogBrandRepository, CatalogBrandRepository>();
             services.AddDbContext<CatalogContext>(opt =>
                 opt.UseSqlServer("Server=sqldata;Initial Catalog=CatalogDb;User Id=sa;Password=Pass@word"));
             services.AddSwaggerGen(c =>
