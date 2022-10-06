@@ -48,7 +48,10 @@ namespace Catalog.Models.Repository
 
         public async Task<IEnumerable<CatalogItem>> GetCatalogItems()
         {
-            List<CatalogItem> itemList = await _context.CatalogItems.ToListAsync();
+            List<CatalogItem> itemList = await _context.CatalogItems
+                .Include(c => c.CatalogBrand)
+                .Include(c => c.CatalogType)
+                .ToListAsync();
             return itemList;
         }
     }

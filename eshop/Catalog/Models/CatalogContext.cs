@@ -1,6 +1,7 @@
 ﻿using Catalog.Models.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
+using System.Xml.Linq;
 
 namespace Catalog.Models
 {
@@ -31,7 +32,8 @@ namespace Catalog.Models
                 Type = "Mug"
             });
             //CatalogItem
-            builder.Entity<CatalogItem>().HasData(new CatalogItem
+            builder.Entity<CatalogItem>().HasData(
+            new CatalogItem
             {
                 Id = 1,
                 CatalogTypeId = 1,
@@ -41,6 +43,17 @@ namespace Catalog.Models
                 Name = ".NET Bot Black Hoodie",
                 Price = 19.5M,
                 PictureFileName = "1.png"
+            },
+            new CatalogItem
+            {
+                Id = 2,
+                CatalogTypeId = 1,
+                CatalogBrandId = 1,
+                AvailableStock = 100,
+                Description = ".NET Black & White Mug",
+                Name = ".NET Black & White Mug",
+                Price = 8.50M,
+                PictureFileName = "2.png"
             });
         }
 

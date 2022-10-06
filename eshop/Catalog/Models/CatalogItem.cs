@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Catalog.Models
 {
@@ -16,13 +17,13 @@ namespace Catalog.Models
 
         public string PictureUri { get; set; }
 
-        public int CatalogTypeId { get; set; }
+        public int? CatalogTypeId { get; set; }
 
-        public CatalogType CatalogType { get; set; }
+        public virtual CatalogType CatalogType { get; set; }
 
-        public int CatalogBrandId { get; set; }
+        public int? CatalogBrandId { get; set; }
 
-        public CatalogBrand CatalogBrand { get; set; }
+        public virtual CatalogBrand CatalogBrand { get; set; }
 
         public int AvailableStock { get; set; }
     }

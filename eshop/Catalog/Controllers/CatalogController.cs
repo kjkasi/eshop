@@ -1,10 +1,12 @@
 ﻿using Catalog.Models;
 using Catalog.Models.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace Catalog.Controllers
@@ -22,8 +24,9 @@ namespace Catalog.Controllers
             _brandRepo = brandRepo;
         }
 
-        [HttpGet]
-        [Route("items")]
+        [HttpGet("items")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        //[Route("items")]
         public async Task<ActionResult> ItemsAsync()
         {
             var catalogItems = await _itemRepo.GetCatalogItems();
@@ -31,8 +34,11 @@ namespace Catalog.Controllers
             return Ok(catalogItems);
         }
 
-        [HttpGet]
-        [Route("items/{id:int}")]
+        [HttpGet("items/{id:int}", Name = "ItemByIdAsync")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        //[Route("items/{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatalogItem))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> ItemByIdAsync(int id)
         {
             var catalogItem = await _itemRepo.GetCatalogItemById(id);
@@ -43,16 +49,18 @@ namespace Catalog.Controllers
             return NotFound();
         }
 
-        [HttpPost]
-        [Route("items")]
+        [HttpPost("items")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        //[Route("items")]
         public async Task<ActionResult> CreateItemAsync(CatalogItem catalogItem)
         {
             await _itemRepo.CreateUpdateCatalogItem(catalogItem);
             return CreatedAtAction(nameof(ItemByIdAsync), new { Id = catalogItem.Id }, catalogItem);
         }
 
-        [HttpGet]
-        [Route("brands")]
+        [HttpGet("brands")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        //[Route("brands")]
         public async Task<ActionResult> BrandsAsync()
         {
             var catalogBrands = await _brandRepo.GetCatalogBrands();
@@ -60,6 +68,7 @@ namespace Catalog.Controllers
         }
 
         [HttpGet("brands/{id:int}", Name = "BrandByIdAsync")]
+        [Consumes(MediaTypeNames.Application.Json)]
         //[Route("brands/{id:int}")]
         public async Task<ActionResult> BrandByIdAsync(int id)
         {
@@ -71,12 +80,13 @@ namespace Catalog.Controllers
             return NotFound();
         }
 
-        [HttpPost]
-        [Route("brands")]
+        [HttpPost("brands")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        //[Route("brands")]
         public async Task<ActionResult> CreateBrandAsync(CatalogBrand catalogBrand)
         {
-            await _brandRepo.CreateCatalogBrand(catalogBrand);
-            return CreatedAtRoute(nameof(BrandByIdAsync), new { Id = catalogBrand.Id }, null);
+            CatalogBrand brand = await _brandRepo.CreateCatalogBrand(catalogBrand);
+            return CreatedAtRoute(nameof(BrandByIdAsync), new { Id = catalogBrand.Id }, brand);
         }
     }
 }
