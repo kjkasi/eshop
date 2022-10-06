@@ -8,7 +8,7 @@ namespace Catalog.Models.Configuration
     {
         public void Configure(EntityTypeBuilder<CatalogType> builder)
         {
-            builder.ToTable("CatalogType");
+            builder.ToTable("Type");
 
             builder.HasKey(ci => ci.Id);
 

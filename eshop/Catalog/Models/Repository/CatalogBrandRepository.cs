@@ -14,6 +14,14 @@ namespace Catalog.Models.Repository
             _context = context;
         }
 
+        public async Task<CatalogBrand> CreateCatalogBrand(CatalogBrand catalogBrand)
+        {
+            _context.CatalogBrands.Add(catalogBrand);
+
+            await _context.SaveChangesAsync();
+            return catalogBrand;
+        }
+
         public async Task<CatalogBrand> CreateUpdateCatalogBrand(CatalogBrand catalogBrand)
         {
             if (catalogBrand.Id > 0)

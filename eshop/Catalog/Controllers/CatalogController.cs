@@ -59,8 +59,8 @@ namespace Catalog.Controllers
             return Ok(catalogBrands);
         }
 
-        [HttpGet]
-        [Route("brands/{id:int}")]
+        [HttpGet("brands/{id:int}", Name = "BrandByIdAsync")]
+        //[Route("brands/{id:int}")]
         public async Task<ActionResult> BrandByIdAsync(int id)
         {
             var catalogBrand = await _brandRepo.GetCatalogBrandById(id);
@@ -75,8 +75,8 @@ namespace Catalog.Controllers
         [Route("brands")]
         public async Task<ActionResult> CreateBrandAsync(CatalogBrand catalogBrand)
         {
-            await _brandRepo.CreateUpdateCatalogBrand(catalogBrand);
-            return CreatedAtAction(nameof(BrandByIdAsync), new { Id = catalogBrand.Id }, catalogBrand);
+            await _brandRepo.CreateCatalogBrand(catalogBrand);
+            return CreatedAtRoute(nameof(BrandByIdAsync), new { Id = catalogBrand.Id }, null);
         }
     }
 }
