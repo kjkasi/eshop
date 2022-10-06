@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Catalog.Models
+namespace Catalog.Models.Repository
 {
     public interface ICatalogItemRepository
     {

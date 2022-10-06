@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Catalog.Models
+namespace Catalog.Models.Configuration
 {
     public class CatalogBrandEntityTypeConfiguration
         : IEntityTypeConfiguration<CatalogBrand>

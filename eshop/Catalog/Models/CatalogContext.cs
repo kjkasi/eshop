@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Catalog.Models.Configuration;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Catalog.Models
 {
@@ -9,11 +11,6 @@ namespace Catalog.Models
         {
             Database.EnsureCreated();
         }
-
-
-        public DbSet<CatalogItem> CatalogItems { get; set; }
-        public DbSet<CatalogBrand> CatalogBrands { get; set; }
-        public DbSet<CatalogType> CatalogTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -46,5 +43,9 @@ namespace Catalog.Models
                 PictureFileName = "1.png"
             });
         }
+
+        public DbSet<CatalogItem> CatalogItems { get; set; }
+        public DbSet<CatalogBrand> CatalogBrands { get; set; }
+        public DbSet<CatalogType> CatalogTypes { get; set; }
     }
 }

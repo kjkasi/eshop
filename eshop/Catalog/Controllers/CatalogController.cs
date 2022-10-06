@@ -1,4 +1,5 @@
 ﻿using Catalog.Models;
+using Catalog.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace Catalog.Controllers
         [Route("items")]
         //[ProducesResponseType(typeof(IEnumerable<CatalogItem>), (int)HttpStatusCode.OK)]
         //[ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult> GetCatalogItems()
+        public async Task<ActionResult> ItemsAsync()
         {
             Console.WriteLine("--> GetCatalogItems()");
             var catalogItems = await _repository.GetCatalogItems();
@@ -34,10 +35,10 @@ namespace Catalog.Controllers
 
         [HttpGet]
         [Route("items/{id:int}")]
-        public ActionResult<CatalogItem> GetCatalogItemById(int id)
+        public async Task<ActionResult> ItemByIdAsync(int id)
         {
             Console.WriteLine("--> GetCatalogItemById()");
-            var catalogItem = _repository.GetCatalogItemById(id);
+            var catalogItem = await _repository.GetCatalogItemById(id);
             if (catalogItem != null)
             {
                 return Ok(catalogItem);
@@ -47,11 +48,11 @@ namespace Catalog.Controllers
 
         [HttpPost]
         [Route("items")]
-        public ActionResult<CatalogItem> CreateCatalogItem(CatalogItem catalogItem)
+        public async Task<ActionResult> CreateProductAsync(CatalogItem catalogItem)
         {
             Console.WriteLine("--> CreateCatalogItem()");
-            _repository.CreateUpdateCatalogItem(catalogItem);
-            return CreatedAtRoute(nameof(GetCatalogItemById), new { Id = catalogItem.Id }, catalogItem);
+            await _repository.CreateUpdateCatalogItem(catalogItem);
+            return CreatedAtAction(nameof(ItemByIdAsync), new { Id = catalogItem.Id }, catalogItem);
         }
     }
 }

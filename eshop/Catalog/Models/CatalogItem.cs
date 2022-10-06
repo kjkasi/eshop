@@ -1,4 +1,6 @@
-﻿namespace Catalog.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Catalog.Models
 {
     public class CatalogItem
     {

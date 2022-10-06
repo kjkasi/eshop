@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catalog.Models
+namespace Catalog.Models.Repository
 {
     public class CatalogItemRepository : ICatalogItemRepository
     {
