@@ -26,8 +26,8 @@ namespace Catalog.Models
         {
             #region ApplyConfiguration
             builder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());
-            //builder.ApplyConfiguration(new CatalogTypeEntityTypeConfiguration());
-            //builder.ApplyConfiguration(new CatalogItemEntityTypeConfiguration());
+            builder.ApplyConfiguration(new CatalogTypeEntityTypeConfiguration());
+            builder.ApplyConfiguration(new CatalogItemEntityTypeConfiguration());
             #endregion
 
 

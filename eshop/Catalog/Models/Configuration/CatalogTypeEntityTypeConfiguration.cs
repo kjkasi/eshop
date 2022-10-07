@@ -12,9 +12,9 @@ namespace Catalog.Models.Configuration
 
             builder.HasKey(ci => ci.Id);
 
-            builder.Property(ci => ci.Id)
-                .UseHiLo("catalog_type_hilo")
-                .IsRequired();
+            //builder.Property(ci => ci.Id)
+            //    .UseHiLo("catalog_type_hilo")
+            //    .IsRequired();
 
             builder.Property(cb => cb.Type)
                 .IsRequired()
