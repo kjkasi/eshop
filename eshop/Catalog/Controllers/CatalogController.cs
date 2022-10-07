@@ -26,7 +26,6 @@ namespace Catalog.Controllers
 
         [HttpGet("items")]
         [Consumes(MediaTypeNames.Application.Json)]
-        //[Route("items")]
         public async Task<ActionResult> ItemsAsync()
         {
             var catalogItems = await _itemRepo.GetCatalogItems();
@@ -36,7 +35,6 @@ namespace Catalog.Controllers
 
         [HttpGet("items/{id:int}", Name = "ItemByIdAsync")]
         [Consumes(MediaTypeNames.Application.Json)]
-        //[Route("items/{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatalogItem))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> ItemByIdAsync(int id)
@@ -51,7 +49,6 @@ namespace Catalog.Controllers
 
         [HttpPost("items")]
         [Consumes(MediaTypeNames.Application.Json)]
-        //[Route("items")]
         public async Task<ActionResult> CreateItemAsync(CatalogItem catalogItem)
         {
             await _itemRepo.CreateUpdateCatalogItem(catalogItem);
@@ -60,7 +57,6 @@ namespace Catalog.Controllers
 
         [HttpGet("brands")]
         [Consumes(MediaTypeNames.Application.Json)]
-        //[Route("brands")]
         public async Task<ActionResult> BrandsAsync()
         {
             var catalogBrands = await _brandRepo.GetCatalogBrands();
@@ -69,7 +65,6 @@ namespace Catalog.Controllers
 
         [HttpGet("brands/{id:int}", Name = "BrandByIdAsync")]
         [Consumes(MediaTypeNames.Application.Json)]
-        //[Route("brands/{id:int}")]
         public async Task<ActionResult> BrandByIdAsync(int id)
         {
             var catalogBrand = await _brandRepo.GetCatalogBrandById(id);
@@ -82,7 +77,6 @@ namespace Catalog.Controllers
 
         [HttpPost("brands")]
         [Consumes(MediaTypeNames.Application.Json)]
-        //[Route("brands")]
         public async Task<ActionResult> CreateBrandAsync(CatalogBrand catalogBrand)
         {
             CatalogBrand brand = await _brandRepo.CreateCatalogBrand(catalogBrand);

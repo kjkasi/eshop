@@ -9,7 +9,31 @@
       "serviceActions": {
         "catalog": "StartDebugging",
         "client": "StartDebugging",
-        "identity": "StartDebugging"
+        "identity": "StartDebugging",
+        "sqldata": "StartWithoutDebugging"
+      }
+    },
+    "Start MSSQL": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "catalog": "DoNotStart",
+        "client": "DoNotStart",
+        "identity": "DoNotStart",
+        "sqldata": "StartWithoutDebugging"
+      }
+    },
+    "Start My Services": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "catalog",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
+      "serviceActions": {
+        "catalog": "StartDebugging",
+        "client": "StartDebugging",
+        "identity": "StartDebugging",
+        "sqldata": "DoNotStart"
       }
     }
   }
