@@ -17,13 +17,17 @@ namespace Catalog.Controllers
     {
         private readonly ICatalogItemRepository _itemRepo;
         private readonly ICatalogBrandRepository _brandRepo;
+        private readonly ICatalogTypeRepository _typeRepo;
 
-        public CatalogController(ICatalogItemRepository itemRepo, ICatalogBrandRepository brandRepo)
+        public CatalogController(ICatalogItemRepository itemRepo, ICatalogBrandRepository brandRepo, ICatalogTypeRepository typeRepo)
         {
             _itemRepo = itemRepo;
             _brandRepo = brandRepo;
+            _typeRepo = typeRepo;
         }
 
+
+        #region Items API
         [HttpGet("items")]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<ActionResult> ItemsAsync()
@@ -35,8 +39,6 @@ namespace Catalog.Controllers
 
         [HttpGet("items/{id:int}", Name = "ItemByIdAsync")]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatalogItem))]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> ItemByIdAsync(int id)
         {
             var catalogItem = await _itemRepo.GetCatalogItemById(id);
@@ -54,7 +56,9 @@ namespace Catalog.Controllers
             await _itemRepo.CreateUpdateCatalogItem(catalogItem);
             return CreatedAtAction(nameof(ItemByIdAsync), new { Id = catalogItem.Id }, catalogItem);
         }
+        #endregion
 
+        #region BrandsAPI
         [HttpGet("brands")]
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<ActionResult> BrandsAsync()
@@ -82,5 +86,36 @@ namespace Catalog.Controllers
             CatalogBrand brand = await _brandRepo.CreateCatalogBrand(catalogBrand);
             return CreatedAtRoute(nameof(BrandByIdAsync), new { Id = catalogBrand.Id }, brand);
         }
+        #endregion
+
+        #region Types API
+        [HttpGet("types")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<ActionResult> TypesAsync()
+        {
+            var typeBrands = await _typeRepo.GetCatalogTypes();
+            return Ok(typeBrands);
+        }
+
+        [HttpGet("types/{id:int}", Name = "TypesByIdAsync")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<ActionResult> TypesByIdAsync(int id)
+        {
+            var catalogType = await _typeRepo.GetCatalogTypeById(id);
+            if (catalogType != null)
+            {
+                return Ok(catalogType);
+            }
+            return NotFound();
+        }
+
+        [HttpPost("types")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<ActionResult> CreateTypeAsync(CatalogType catalogType)
+        {
+            CatalogType type = await _typeRepo.CreateCatalogType(catalogType);
+            return CreatedAtRoute(nameof(TypesByIdAsync), new { Id = catalogType.Id }, type);
+        }
+        #endregion
     }
 }

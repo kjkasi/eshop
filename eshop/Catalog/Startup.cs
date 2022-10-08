@@ -21,8 +21,13 @@ namespace Catalog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            #region Repository
             services.AddScoped<ICatalogItemRepository, CatalogItemRepository>();
             services.AddScoped<ICatalogBrandRepository, CatalogBrandRepository>();
+            services.AddScoped<ICatalogTypeRepository, CatalogTypeRepository>();
+            #endregion
+
             services.AddDbContext<CatalogContext>(opt =>
                 opt.UseSqlServer("Server=sqldata;Initial Catalog=CatalogDb;User Id=sa;Password=Pass@word"));
             services.AddSwaggerGen(c =>
