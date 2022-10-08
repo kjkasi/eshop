@@ -22,20 +22,6 @@ namespace Catalog.Models.Repository
             return catalogBrand;
         }
 
-        public async Task<CatalogBrand> CreateUpdateCatalogBrand(CatalogBrand catalogBrand)
-        {
-            if (catalogBrand.Id > 0)
-            {
-                _context.CatalogBrands.Update(catalogBrand);
-            }
-            else
-            {
-                _context.CatalogBrands.Add(catalogBrand);
-            }
-            await _context.SaveChangesAsync();
-            return catalogBrand;
-        }
-
         public async Task<bool> DeleteCatalogBrand(int brandId)
         {
             CatalogBrand catalogBrand = await _context.CatalogBrands.FirstOrDefaultAsync(u => u.Id == brandId);
@@ -58,6 +44,14 @@ namespace Catalog.Models.Repository
         {
             List<CatalogBrand> brandList = await _context.CatalogBrands.ToListAsync();
             return brandList;
+        }
+
+        public async Task<CatalogBrand> UpdateCatalogBrand(CatalogBrand catalogBrand)
+        {
+            _context.CatalogBrands.Update(catalogBrand);
+
+            await _context.SaveChangesAsync();
+            return catalogBrand;
         }
     }
 }

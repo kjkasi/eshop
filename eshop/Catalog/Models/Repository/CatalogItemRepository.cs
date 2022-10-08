@@ -14,6 +14,14 @@ namespace Catalog.Models.Repository
             _context = context;
         }
 
+        public async Task<CatalogItem> CreateCatalogItem(CatalogItem catalogItem)
+        {
+            _context.CatalogItems.Add(catalogItem);
+
+            await _context.SaveChangesAsync();
+            return catalogItem;
+        }
+
         public async Task<CatalogItem> CreateUpdateCatalogItem(CatalogItem catalogItem)
         {
             if (catalogItem.Id > 0)
@@ -53,6 +61,14 @@ namespace Catalog.Models.Repository
                 .Include(c => c.CatalogType)
                 .ToListAsync();
             return itemList;
+        }
+
+        public async Task<CatalogItem> UpdateCatalogItem(CatalogItem catalogItem)
+        {
+            _context.CatalogItems.Update(catalogItem);
+
+            await _context.SaveChangesAsync();
+            return catalogItem;
         }
     }
 }

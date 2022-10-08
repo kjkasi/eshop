@@ -7,8 +7,8 @@ namespace Catalog.Models.Repository
     {
         Task<IEnumerable<CatalogBrand>> GetCatalogBrands();
         Task<CatalogBrand> GetCatalogBrandById(int brandId);
-        Task<CatalogBrand> CreateUpdateCatalogBrand(CatalogBrand catalogBrand);
         Task<CatalogBrand> CreateCatalogBrand(CatalogBrand catalogBrand);
+        Task<CatalogBrand> UpdateCatalogBrand(CatalogBrand catalogBrand);
         Task<bool> DeleteCatalogBrand(int brandId);
     }
 }

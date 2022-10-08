@@ -46,7 +46,7 @@ namespace Catalog.Models.Repository
             return typeList;
         }
 
-        public async Task<CatalogType> UpdateCatalogTyoe(CatalogType catalogType)
+        public async Task<CatalogType> UpdateCatalogType(CatalogType catalogType)
         {
             _context.CatalogTypes.Update(catalogType);
 

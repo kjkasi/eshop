@@ -53,7 +53,15 @@ namespace Catalog.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<ActionResult> CreateItemAsync(CatalogItem catalogItem)
         {
-            await _itemRepo.CreateUpdateCatalogItem(catalogItem);
+            await _itemRepo.CreateCatalogItem(catalogItem);
+            return CreatedAtAction(nameof(ItemByIdAsync), new { Id = catalogItem.Id }, catalogItem);
+        }
+
+        [HttpPut("items")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<ActionResult> UpdateItemAsync(CatalogItem catalogItem)
+        {
+            await _itemRepo.UpdateCatalogItem(catalogItem);
             return CreatedAtAction(nameof(ItemByIdAsync), new { Id = catalogItem.Id }, catalogItem);
         }
         #endregion
@@ -86,6 +94,14 @@ namespace Catalog.Controllers
             CatalogBrand brand = await _brandRepo.CreateCatalogBrand(catalogBrand);
             return CreatedAtRoute(nameof(BrandByIdAsync), new { Id = catalogBrand.Id }, brand);
         }
+
+        [HttpPut("brands")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<ActionResult> UpdateBrandAsync(CatalogBrand catalogBrand)
+        {
+            CatalogBrand brand = await _brandRepo.UpdateCatalogBrand(catalogBrand);
+            return CreatedAtRoute(nameof(BrandByIdAsync), new { Id = catalogBrand.Id }, brand);
+        }
         #endregion
 
         #region Types API
@@ -114,6 +130,14 @@ namespace Catalog.Controllers
         public async Task<ActionResult> CreateTypeAsync(CatalogType catalogType)
         {
             CatalogType type = await _typeRepo.CreateCatalogType(catalogType);
+            return CreatedAtRoute(nameof(TypesByIdAsync), new { Id = catalogType.Id }, type);
+        }
+
+        [HttpPut("types")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<ActionResult> UpdateTypeAsync(CatalogType catalogType)
+        {
+            CatalogType type = await _typeRepo.UpdateCatalogType(catalogType);
             return CreatedAtRoute(nameof(TypesByIdAsync), new { Id = catalogType.Id }, type);
         }
         #endregion

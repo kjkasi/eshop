@@ -15,14 +15,6 @@ namespace Catalog.Models
         public CatalogContext(DbContextOptions<CatalogContext> opt)
             : base(opt)
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
-            //var sql = Database.GenerateCreateScript();
-            //Console.WriteLine(sql);
-        }
-
-        public CatalogContext()
-        {
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
